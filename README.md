@@ -23,7 +23,7 @@ We aim to establish a benchmark for MICCAI 2024 challenges.
 - [SAM-3D](https://github.com/uni-medical/SAM-Med3D) (In Progress)
 
 ## Benchmark Available 
-- Liver Tumor Segmentation [(LiTS)](https://www.sciencedirect.com/science/article/pii/S1361841522003085) ✓
+- Liver Tumor Segmentation 5-Fold [(LiTS)](https://www.sciencedirect.com/science/article/pii/S1361841522003085) ✓
 
 | Model    | Lesion Dice       | Lesion Jaccard    | Lesion RMSD       | Liver Dice        | Liver Jaccard     | Liver RMSD        |
 |----------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|
