@@ -175,7 +175,7 @@ nnUNetv2_predict -i INPUT_FOLDER -o OUTPUT_FOLDER -d DATASET_ID -c CONFIGURATION
 
 
 ## Citation
-If you utilize the baselines in this repository for your research, please consider citing the relevant papers for [Swin-UNETR](https://arxiv.org/abs/2201.01266), [LightM-UNet](https://arxiv.org/abs/2403.05246v1), [U-Mamba](https://arxiv.org/abs/2401.04722), MedNext, [SAMed](https://arxiv.org/abs/2304.13785), and [nnU-Net](https://www.nature.com/articles/s41592-020-01008-z).
+If you utilize the baselines in this repository for your research, please consider citing the relevant papers for [Swin-UNETR](https://arxiv.org/abs/2201.01266), [LightM-UNet](https://arxiv.org/abs/2403.05246v1), [U-Mamba](https://arxiv.org/abs/2401.04722), [MedNext](https://github.com/MIC-DKFZ/MedNeXt), [SAMed](https://arxiv.org/abs/2304.13785), and [nnU-Net](https://www.nature.com/articles/s41592-020-01008-z).
 
 
 
