@@ -6,7 +6,7 @@ at MICCAI 2024. This repository is built on nnUNet,
 incorporating additional functionalities for training models
 such as **SAMed**️, **Mamba Variants**, 
 and **MedNeXT**. 
-We aim is to establish a benchmark for MICCAI 2024 challenges.
+We aim to establish a benchmark for MICCAI 2024 challenges.
 
 ## News & Updates
 
@@ -121,8 +121,8 @@ To train the models, follow these instructions:
     | [SegResNet](https://arxiv.org/pdf/1810.11654.pdf)                             | 3d_fullres    | nnUNetTrainerSegResNet            |
     | [U-Mamba](https://arxiv.org/abs/2401.04722)                                   | 3d_fullres    | nnUNetTrainerUMambaBot            |
     | [LightM-UNet](https://arxiv.org/abs/2403.05246v1)                             | 3d_fullres    | nnUNetTrainerLightMUNet           |
-    | [MedNext-B-5](https://link.springer.com/chapter/10.1007/978-3-031-43901-8_39| 3d_fullres    | nnUNetTrainerV2_MedNeXt_B_kernel5 |
-    | [MedNext-L-5](https://link.springer.com/chapter/10.1007/978-3-031-43901-8_39| 3d_fullres    | nnUNetTrainerV2_MedNeXt_L_kernel5 |
+    | [MedNext-B-5](https://link.springer.com/chapter/10.1007/978-3-031-43901-8_39) | 3d_fullres    | nnUNetTrainerV2_MedNeXt_B_kernel5 |
+    | [MedNext-L-5](https://link.springer.com/chapter/10.1007/978-3-031-43901-8_39) | 3d_fullres    | nnUNetTrainerV2_MedNeXt_L_kernel5 |
     | [SAMed-B](https://arxiv.org/abs/2304.13785)                                   | 2d_p256       | nnUNetTrainerV2_SAMed_b_r_4       |
     | [SAMed-H](https://arxiv.org/abs/2304.13785)                                   | 2d_p512       | nnUNetTrainerV2_SAMed_h_r_4       |
 
