@@ -4,8 +4,7 @@
 Welcome to the official repository for the TriALS challenge
 at MICCAI 2024. This repository is built on nnUNet, 
 incorporating additional functionalities for training models
-such as **SAMed**️, **Mamba Variants**, 
-and **MedNeXT**. 
+such as **SAMed** ✂️, **Mamba Variants** :snake:, and **MedNeXT** ⚡. 
 We aim to establish a benchmark for MICCAI 2024 challenges.
 
 ## News & Updates
