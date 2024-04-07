@@ -501,7 +501,7 @@ class ExperimentPlanner(object):
         }
 
         plans['configurations']['2d_p512'] = {
-            'inherits_from': '2d_p512',
+            'inherits_from': '2d',
             'patch_size': [512, 512]
         }
 
