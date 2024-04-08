@@ -139,6 +139,11 @@ class nnUNetTrainerV2_MedNeXt_L_kernel5(nnUNetTrainerMedNext):
         model = create_mednextv1_large(num_input_channels, label_manager.num_segmentation_heads, 5, False)
 
         return model
+class nnUNetTrainerV2_MedNeXt_L_kernel5_100epochs(nnUNetTrainerV2_MedNeXt_L_kernel5):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.num_epochs = 100
 
 class nnUNetTrainerV2_MedNeXt_B_kernel5(nnUNetTrainerMedNext):
     """
@@ -156,6 +161,14 @@ class nnUNetTrainerV2_MedNeXt_B_kernel5(nnUNetTrainerMedNext):
         model = create_mednextv1_base(num_input_channels, label_manager.num_segmentation_heads, 5, False)
 
         return model
+
+class nnUNetTrainerV2_MedNeXt_B_kernel5_100epochs(nnUNetTrainerV2_MedNeXt_B_kernel5):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.num_epochs = 100
+
+
 
 class nnUNetTrainerV2_MedNeXt_M_kernel5(nnUNetTrainerMedNext):
     """

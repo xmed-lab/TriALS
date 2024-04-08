@@ -2,7 +2,7 @@ from nnunetv2.training.nnUNetTrainer.nnUNetTrainer import nnUNetTrainer
 from nnunetv2.utilities.plans_handling.plans_handler import ConfigurationManager, PlansManager
 from torch import nn
 from nnunetv2.nets.UMambaBot import get_umamba_bot_from_plans
-
+import torch
 
 class nnUNetTrainerUMambaBot(nnUNetTrainer):
     """
@@ -21,4 +21,10 @@ class nnUNetTrainerUMambaBot(nnUNetTrainer):
         print("UMambaBot: {}".format(model))
 
         return model
-    
+
+class nnUNetTrainerUMambaBot_100epochs(nnUNetTrainerUMambaBot):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.num_epochs = 100
+

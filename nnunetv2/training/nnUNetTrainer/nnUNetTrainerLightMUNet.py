@@ -11,7 +11,6 @@ from nnunetv2.nets.LightMUNet import LightMUNet
 from torch.optim import Adam
 
 class nnUNetTrainerLightMUNet(nnUNetTrainerNoDeepSupervision):
-
     def __init__(
             self,
             plans: dict,
@@ -125,3 +124,18 @@ class nnUNetTrainerLightMUNet(nnUNetTrainerNoDeepSupervision):
     
     def set_deep_supervision_enabled(self, enabled: bool):
         pass
+
+
+
+class nnUNetTrainerLightMUNet_100epochs(nnUNetTrainerLightMUNet):
+    def __init__(
+            self,
+            plans: dict,
+            configuration: str,
+            fold: int,
+            dataset_json: dict,
+            unpack_dataset: bool = True,
+            device: torch.device = torch.device('cuda')
+        ):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.num_epochs = 100

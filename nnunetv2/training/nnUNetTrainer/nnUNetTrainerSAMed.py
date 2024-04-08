@@ -253,6 +253,16 @@ class nnUNetTrainerV2_SAMed_h_r_4(nnUNetTrainerSAMed):
 
         return model
 
+class nnUNetTrainerV2_SAMed_h_r_4_100epochs(nnUNetTrainerV2_SAMed_h_r_4):
+    """
+    Residual Encoder + UMmaba Bottleneck + Residual Decoder + Skip Connections
+    """
+
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+
+        self.num_epochs = 100
 
 class nnUNetTrainerV2_SAMed_b_r_4(nnUNetTrainerSAMed):
     """
@@ -286,3 +296,13 @@ class nnUNetTrainerV2_SAMed_b_r_4(nnUNetTrainerSAMed):
                                              num_multimask_outputs=label_manager.num_segmentation_heads-1 #remove bg
                                              )
         return model
+
+class nnUNetTrainerV2_SAMed_b_r_4_100epochs(nnUNetTrainerV2_SAMed_b_r_4):
+    """
+    Residual Encoder + UMmaba Bottleneck + Residual Decoder + Skip Connections
+    """
+
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.num_epochs = 100
