@@ -44,7 +44,7 @@ The Dice coefficient for lesions is calculated as an average across all lesions.
 
 | Model    | Lesion Dice   | Lesion Jaccard | Lesion RMSD  | Liver Dice    | Liver Jaccard | Liver RMSD   |
 |----------|---------------|----------------|--------------|---------------|---------------|--------------|
-| nnUNet3D_1000 | 79.57 (±1.33) | 67.06 (±1.84)  | 1.26 (±0.11) | 96.28 (±0.62) | 93.01 (±1.03) | 4.35 (±1.22) |
+| nnUNet3D | 79.57 (±1.33) | 67.06 (±1.84)  | 1.26 (±0.11) | 96.28 (±0.62) | 93.01 (±1.03) | 4.35 (±1.22) |
 
 
 - [TriALS](https://www.synapse.org/#!Synapse:syn53285416/wiki/) (in-progress)
