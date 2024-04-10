@@ -40,6 +40,12 @@ The Dice coefficient for lesions is calculated as an average across all lesions.
 | MedNext-L | 77.85 (2.79)  | 65.02 (±3.64)   | 1.48 (±0.30) | 94.55 (±1.07) | 90.00 (±1.77) | 14.69 (±3.08) |
 | SAMed-H  | 78.60 (±1.56) | 65.77 (±2.03)  | 1.50 (±0.15)  | 95.58 (±0.68) | 91.65 (±1.14) | 8.67 (±2.09)  |
 
+- Liver Tumor Segmentation 5-Fold (**1000 epoch**) [(LiTS)](https://www.sciencedirect.com/science/article/pii/S1361841522003085) (in-progress)
+
+| Model    | Lesion Dice   | Lesion Jaccard | Lesion RMSD  | Liver Dice    | Liver Jaccard | Liver RMSD   |
+|----------|---------------|----------------|--------------|---------------|---------------|--------------|
+| nnUNet3D_1000 | 79.57 (±1.33) | 67.06 (±1.84)  | 1.26 (±0.11) | 96.28 (±0.62) | 93.01 (±1.03) | 4.35 (±1.22) |
+
 
 - [TriALS](https://www.synapse.org/#!Synapse:syn53285416/wiki/) (in-progress)
 
