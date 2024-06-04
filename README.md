@@ -156,9 +156,9 @@ CUDA_VISIBLE_DEVICES=0 nnUNetv2_train 3 3d_fullres 0 -tr nnUNetTrainerV2_MedNeXt
 Download the checkpoint of original SAM into `checkpoint`
 ```bash
 # sam-b checkpoint
-wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth -O checkpoint/sam_vit_b_01ec64.pth
+wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth -O checkpoints/sam_vit_b_01ec64.pth
 # sam-h checkpoint
-wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth -O checkpoint/sam_vit_h_4b8939.pth
+wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth -O checkpoints/sam_vit_h_4b8939.pth
  ```
 
 ```bash
