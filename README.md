@@ -9,7 +9,7 @@ We aim to establish a benchmark for MICCAI 2024 challenges.
 
 ## News & Updates
 
-- -  **News**: ```2024/8/8```: TriALS is now open for submissions! Find detailed instructions [here](https://www.synapse.org/Synapse:syn53285416/wiki/626916/). 
+- ```2024/8/8```: TriALS is now open for submissions! Find detailed instructions [here](https://www.synapse.org/Synapse:syn53285416/wiki/626916/). 
 - ```2024/4/4```: Pre-registration for the TriALS challenge is now open [Pre-register here](https://www.synapse.org/#!Synapse:syn53285416/wiki/).
 - ```2024/4/4```: The TriALS repository now supports **SAMed** ✂️, **Mamba Variants** :snake:, and **MedNeXT** ⚡.
 
