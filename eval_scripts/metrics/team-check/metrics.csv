@@ -1,0 +1,14 @@
+Metric,Value
+lesion_precision,0.8
+lesion_recall,0.8
+lesion_precision_greater_zero,1.0
+lesion_recall_greater_zero,1.0
+lesion_dice,0.8767814601809033
+lesion_jaccard,0.7816992461567145
+lesion_voe,0.2183007538432856
+lesion_rvd,0.07925593492650387
+lesion_assd,0.5891962909208087
+lesion_rmsd,0.9451723162962817
+lesion_msd,5.4471563162678365
+lesion_dice_per_case,0.8734970954079257
+lesion_dice_global,0.8827353964438224
