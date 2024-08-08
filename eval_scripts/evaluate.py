@@ -8,11 +8,6 @@ import gc
 from helpers.calc_metric import dice, detect_lesions, compute_segmentation_scores, LARGE
 from helpers.utils import time_elapsed
 
-# the below 4 lines are the arguments that are passed using the command line
-test_csv_path = sys.argv[1]
-predicted_masks_path = sys.argv[2]
-groundtruth_masks_path = sys.argv[3]
-metrics_csv_path = sys.argv[4]
 
 
 def evaluate_case(pred_file, gt_file):
@@ -94,130 +89,137 @@ def evaluate_case(pred_file, gt_file):
     return lesion_scores, case_lesion_detection_stats, dice_score, dice_per_case_global_acc_I, dice_case_global_accum_S
 
 
-lesion_detection_stats = {0: {'TP': 0, 'FP': 0, 'FN': 0},
-                          0.5: {'TP': 0, 'FP': 0, 'FN': 0}}
-lesion_segmentation_scores = {}
-image_name_list = []
-dice_per_case = {'lesion': []}
-dice_global_x = {'lesion': {'I': 0, 'S': 0},
-                 }
-segmentation_metrics = {'dice': 0,
-                        'jaccard': 0,
-                        'voe': 1,
-                        'rvd': LARGE,
-                        'assd': LARGE,
-                        'rmsd': LARGE,
-                        'msd': LARGE}
+if __name__ == "__main__":
+    # the below 4 lines are the arguments that are passed using the command line
+    test_csv_path = sys.argv[1]
+    predicted_masks_path = sys.argv[2]
+    groundtruth_masks_path = sys.argv[3]
+    metrics_csv_path = sys.argv[4]
 
-os.makedirs(metrics_csv_path,exist_ok=True)
+    lesion_detection_stats = {0: {'TP': 0, 'FP': 0, 'FN': 0},
+                              0.5: {'TP': 0, 'FP': 0, 'FN': 0}}
+    lesion_segmentation_scores = {}
+    image_name_list = []
+    dice_per_case = {'lesion': []}
+    dice_global_x = {'lesion': {'I': 0, 'S': 0},
+                     }
+    segmentation_metrics = {'dice': 0,
+                            'jaccard': 0,
+                            'voe': 1,
+                            'rvd': LARGE,
+                            'assd': LARGE,
+                            'rmsd': LARGE,
+                            'msd': LARGE}
 
-cases_csv_path = os.path.join(metrics_csv_path, "per_case_metrics.csv")
-full_csv_path = os.path.join(metrics_csv_path, "metrics.csv")
+    os.makedirs(metrics_csv_path,exist_ok=True)
 
-with open(test_csv_path, 'r') as reader_file:
-    reader = csv.reader(reader_file)
-    # loop through each row in the CSV file
-    with open(cases_csv_path, mode='w', newline='') as writer_file:
-        writer = csv.writer(writer_file)
+    cases_csv_path = os.path.join(metrics_csv_path, "per_case_metrics.csv")
+    full_csv_path = os.path.join(metrics_csv_path, "metrics.csv")
 
-        writer.writerow(["Image_gt", "Image_pm", "DSC", "precision", "recall", "precision_greater_zero",
-                         "recall_greater_zero"])  # write header row
+    with open(test_csv_path, 'r') as reader_file:
+        reader = csv.reader(reader_file)
+        # loop through each row in the CSV file
+        with open(cases_csv_path, mode='w', newline='') as writer_file:
+            writer = csv.writer(writer_file)
 
-        for row in reader:
-            image_hash = row[0]
-            print(f"Evaluating volume: {image_hash} ...")
-            # read ground truth mask image
-            gt_path = os.path.join(groundtruth_masks_path, f"{image_hash}.nii.gz")
-            if not os.path.exists(gt_path):
-                print('Ground Truth for volume {} does not exist!'.format(image_hash))
-                continue  # skip if ground truth mask does not exist
+            writer.writerow(["Image_gt", "Image_pm", "DSC", "precision", "recall", "precision_greater_zero",
+                             "recall_greater_zero"])  # write header row
 
-            # check if predicted mask exists
-            pm_path = os.path.join(predicted_masks_path, f"{image_hash}.nii.gz")
-            if os.path.exists(pm_path):
-                t = time_elapsed()
-                #per case metrics
-                lesion_scores, case_lesion_detection_stats, dice_score, dice_per_case_global_acc_I, dice_case_global_accum_S = evaluate_case(
-                    pm_path, gt_path)
+            for row in reader:
+                image_hash = row[0]
+                print(f"Evaluating volume: {image_hash} ...")
+                # read ground truth mask image
+                gt_path = os.path.join(groundtruth_masks_path, f"{image_hash}.nii.gz")
+                if not os.path.exists(gt_path):
+                    print('Ground Truth for volume {} does not exist!'.format(image_hash))
+                    continue  # skip if ground truth mask does not exist
 
-                #accumate global metrics
-                dice_per_case['lesion'].append(dice_score)
+                # check if predicted mask exists
+                pm_path = os.path.join(predicted_masks_path, f"{image_hash}.nii.gz")
+                if os.path.exists(pm_path):
+                    t = time_elapsed()
+                    #per case metrics
+                    lesion_scores, case_lesion_detection_stats, dice_score, dice_per_case_global_acc_I, dice_case_global_accum_S = evaluate_case(
+                        pm_path, gt_path)
 
-                _det_case = {}
-                for overlap in [0, 0.5]:
-                    TP = case_lesion_detection_stats[overlap]['TP']
-                    FP = case_lesion_detection_stats[overlap]['FP']
-                    FN = case_lesion_detection_stats[overlap]['FN']
+                    #accumate global metrics
+                    dice_per_case['lesion'].append(dice_score)
 
-                    lesion_detection_stats[overlap]['TP'] += TP
-                    lesion_detection_stats[overlap]['FP'] += FP
-                    lesion_detection_stats[overlap]['FN'] += FN
+                    _det_case = {}
+                    for overlap in [0, 0.5]:
+                        TP = case_lesion_detection_stats[overlap]['TP']
+                        FP = case_lesion_detection_stats[overlap]['FP']
+                        FN = case_lesion_detection_stats[overlap]['FN']
 
-                    precision = float(TP) / (TP + FP) if TP + FP else 0
-                    recall = float(TP) / (TP + FN) if TP + FN else 0
-                    _det_case[overlap] = {'p': precision, 'r': recall}
+                        lesion_detection_stats[overlap]['TP'] += TP
+                        lesion_detection_stats[overlap]['FP'] += FP
+                        lesion_detection_stats[overlap]['FN'] += FN
 
-                if lesion_scores:
-                    for metric in segmentation_metrics:
-                        if metric not in lesion_segmentation_scores:
-                            lesion_segmentation_scores[metric] = []
-                        lesion_segmentation_scores[metric].extend(lesion_scores[metric])
+                        precision = float(TP) / (TP + FP) if TP + FP else 0
+                        recall = float(TP) / (TP + FN) if TP + FN else 0
+                        _det_case[overlap] = {'p': precision, 'r': recall}
 
-                dice_global_x['lesion']['I'] += dice_per_case_global_acc_I
-                dice_global_x['lesion']['S'] += dice_case_global_accum_S
+                    if lesion_scores:
+                        for metric in segmentation_metrics:
+                            if metric not in lesion_segmentation_scores:
+                                lesion_segmentation_scores[metric] = []
+                            lesion_segmentation_scores[metric].extend(lesion_scores[metric])
 
-                # get names of gt and pm images without extension
-                gt_name = f"{image_hash}"
-                pm_name = f"pred-{image_hash}"
-                # Iterate through each image name and write the corresponding dice scores
-                writer.writerow(
-                    [gt_name, pm_name, dice_score, _det_case[0.5]['p'], _det_case[0.5]['r'], _det_case[0]['p'],
-                     _det_case[0]['r']])
+                    dice_global_x['lesion']['I'] += dice_per_case_global_acc_I
+                    dice_global_x['lesion']['S'] += dice_case_global_accum_S
 
-_det = {}
-for overlap in [0, 0.5]:
-    TP = lesion_detection_stats[overlap]['TP']
-    FP = lesion_detection_stats[overlap]['FP']
-    FN = lesion_detection_stats[overlap]['FN']
-    precision = float(TP) / (TP + FP) if TP + FP else 0
-    recall = float(TP) / (TP + FN) if TP + FN else 0
-    _det[overlap] = {'p': precision, 'r': recall}
+                    # get names of gt and pm images without extension
+                    gt_name = f"{image_hash}"
+                    pm_name = f"pred-{image_hash}"
+                    # Iterate through each image name and write the corresponding dice scores
+                    writer.writerow(
+                        [gt_name, pm_name, dice_score, _det_case[0.5]['p'], _det_case[0.5]['r'], _det_case[0]['p'],
+                         _det_case[0]['r']])
 
-lesion_detection_metrics = {'precision': _det[0.5]['p'],
-                            'recall': _det[0.5]['r'],
-                            'precision_greater_zero': _det[0]['p'],
-                            'recall_greater_zero': _det[0]['r']}
+    _det = {}
+    for overlap in [0, 0.5]:
+        TP = lesion_detection_stats[overlap]['TP']
+        FP = lesion_detection_stats[overlap]['FP']
+        FN = lesion_detection_stats[overlap]['FN']
+        precision = float(TP) / (TP + FP) if TP + FP else 0
+        recall = float(TP) / (TP + FN) if TP + FN else 0
+        _det[overlap] = {'p': precision, 'r': recall}
 
-# Compute lesion segmentation metrics.
-lesion_segmentation_metrics = {}
-for m in lesion_segmentation_scores:
-    lesion_segmentation_metrics[m] = np.mean(lesion_segmentation_scores[m])
-if len(lesion_segmentation_scores) == 0:
-    # Nothing detected - set default values.
-    lesion_segmentation_metrics.update(segmentation_metrics)
+    lesion_detection_metrics = {'precision': _det[0.5]['p'],
+                                'recall': _det[0.5]['r'],
+                                'precision_greater_zero': _det[0]['p'],
+                                'recall_greater_zero': _det[0]['r']}
 
-lesion_segmentation_metrics['dice_per_case'] = np.mean(dice_per_case['lesion'])
-dice_global = 2. * dice_global_x['lesion']['I'] / dice_global_x['lesion']['S']
-lesion_segmentation_metrics['dice_global'] = dice_global
+    # Compute lesion segmentation metrics.
+    lesion_segmentation_metrics = {}
+    for m in lesion_segmentation_scores:
+        lesion_segmentation_metrics[m] = np.mean(lesion_segmentation_scores[m])
+    if len(lesion_segmentation_scores) == 0:
+        # Nothing detected - set default values.
+        lesion_segmentation_metrics.update(segmentation_metrics)
 
-# Write fold metrics to a CSV file.
-print("Computed LESION DETECTION metrics:")
-for metric, value in lesion_detection_metrics.items():
-    print("{}: {:.3f}".format(metric, float(value)))
-print("Computed LESION SEGMENTATION metrics (for detected lesions):")
-for metric, value in lesion_segmentation_metrics.items():
-    print("{}: {:.3f}".format(metric, float(value)))
+    lesion_segmentation_metrics['dice_per_case'] = np.mean(dice_per_case['lesion'])
+    dice_global = 2. * dice_global_x['lesion']['I'] / dice_global_x['lesion']['S']
+    lesion_segmentation_metrics['dice_global'] = dice_global
 
-# Open the CSV file for writing
-with open(full_csv_path, mode='w', newline='') as file:
-    # Create a CSV writer object
-    writer = csv.writer(file)
-    # Write the headers
-    writer.writerow(['Metric', 'Value'])
-    # Write the lesion detection metrics
+    # Write fold metrics to a CSV file.
+    print("Computed LESION DETECTION metrics:")
     for metric, value in lesion_detection_metrics.items():
-        writer.writerow([f"lesion_{metric}", value])  # Writing the value directly without formatting
-    # Write the lesion segmentation metrics
+        print("{}: {:.3f}".format(metric, float(value)))
+    print("Computed LESION SEGMENTATION metrics (for detected lesions):")
     for metric, value in lesion_segmentation_metrics.items():
-        writer.writerow([f"lesion_{metric}", value])  # Writing the value directly without formatting
-    # Write the liver segmentation metrics
+        print("{}: {:.3f}".format(metric, float(value)))
+
+    # Open the CSV file for writing
+    with open(full_csv_path, mode='w', newline='') as file:
+        # Create a CSV writer object
+        writer = csv.writer(file)
+        # Write the headers
+        writer.writerow(['Metric', 'Value'])
+        # Write the lesion detection metrics
+        for metric, value in lesion_detection_metrics.items():
+            writer.writerow([f"lesion_{metric}", value])  # Writing the value directly without formatting
+        # Write the lesion segmentation metrics
+        for metric, value in lesion_segmentation_metrics.items():
+            writer.writerow([f"lesion_{metric}", value])  # Writing the value directly without formatting
+        # Write the liver segmentation metrics
