@@ -89,7 +89,7 @@ where,<br>
 
 The docker image must be named using the following format.
 ```
-trials-<task-name>-<team-name>:<version>
+trials25-<task-name>-<team-name>:<version>
 ```
 where,<br>
 `task-name` is either "task1" or "task2",<br>
@@ -98,7 +98,7 @@ where,<br>
 
 Note: the highest version number tagged image will be used for the final evaluation of your model. 
 
-As an example, a team named "medhacker" submitting a second version of their Docker image for the binary segmentation task "task1" must name their Docker image as `trials-task1-medhacker:v2`.
+As an example, a team named "medhacker" submitting a second version of their Docker image for the binary segmentation task "task1" must name their Docker image as `trials25-task1-medhacker:v2`.
 
 
 ### Testing Docker image
@@ -120,11 +120,11 @@ At any point in the following steps if more information related to Synapse is ne
 ### Create a Synapse project
 To submit files to a challenge on Synapse you need to create a Synapse project first. The project must be named using the challenge name and team names as shown below.
 ```
-TriALS-MedHacker
+TriALS25-MedHacker
 ```
 The Synapse documentation can be referred to [create a project](https://help.synapse.org/docs/Setting-Up-a-Project.2055471258.html#SettingUpaProject-CreatingaProject).
 
-Please add the team named [`TriALS 2024 Admin`](https://www.synapse.org/Team:3491688) to the project and give them "Download" permissions. Follow the documentation on how to [share a project](https://help.synapse.org/docs/Sharing-Settings,-Permissions,-and-Conditions-for-Use.2024276030.html#SharingSettings,Permissions,andConditionsforUse-EditSharingSettingsonaProject). 
+Please add the team named [`TriALS 2025 Admin`](https://www.synapse.org/Team:3491688) to the project and give them "Download" permissions. Follow the documentation on how to [share a project](https://help.synapse.org/docs/Sharing-Settings,-Permissions,-and-Conditions-for-Use.2024276030.html#SharingSettings,Permissions,andConditionsforUse-EditSharingSettingsonaProject). 
 
 ### Login to Synapse in Docker
 * Type the following in a command line tool to login to synapse using docker.
