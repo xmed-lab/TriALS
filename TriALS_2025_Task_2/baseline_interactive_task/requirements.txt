@@ -1,6 +1,0 @@
-cupy-cuda12x
-cucim
-pynvml
-connected-components-3d
-TotalSegmentator
-dicom2nifti==2.6.1

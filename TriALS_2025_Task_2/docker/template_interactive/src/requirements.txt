@@ -1,7 +1,0 @@
-monailabel
-cupy-cuda12x
-cucim
-pynvml
-nnunetv2
-TotalSegmentator
-dicom2nifti==2.6.1
