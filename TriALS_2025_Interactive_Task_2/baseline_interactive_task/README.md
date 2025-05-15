@@ -21,11 +21,23 @@ pip install -U monailabel
 pip install -r requirements.txt
 ```
 
-### Step 3: Liver segmentation
+### Step 3: Liver segmentation and click simulation
 Our baseline requires liver masks as an input channel. We simply use TotalSegmentator to generate them with this command:
 
 ```bash
 ls PATH_TO/imagesTr/ | xargs -I {} TotalSegmentator -i PATH_TO/imagesTr/{} -o PATH_TO/liversTr/{} --roi_subset liver
+```
+
+To also simulate clicks for all images, run this script:
+```bash
+ls PATH_TO/imagesTr/venous_*_0000.nii.gz | \
+xargs -I{} bash -c '\
+  base=$(basename "{}" _0000.nii.gz); \
+  python sw_fastedit_src/sw_fastedit/utils/simulate_clicks_TriALS.py \
+    --input_label PATH_TO/labelsTr/${base}.nii.gz \
+    --input_ct PATH_TO/imagesTr/${base}_0000.nii.gz \
+    --input_liver PATH_TO/liversTr/${base}_0000.nii.gz \
+    --json_output PATH_TO/clicksTr/${base}_clicks.json'
 ```
 
 ### Step 4: Inference
