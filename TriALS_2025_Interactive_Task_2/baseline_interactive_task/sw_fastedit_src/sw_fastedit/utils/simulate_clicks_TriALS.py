@@ -34,7 +34,7 @@ def generate_gaussian_heatmap(coords, shape, sigma=2.0):
     return heatmap
 
 def save_click_heatmaps(clicks, ref_shape, ref_affine, debug_output, input_label):
-    tumor_coords = clicks['tumor']
+    tumor_coords = clicks['lesion']
     non_tumor_coords = clicks['background']
 
     tumor_heatmap = generate_gaussian_heatmap(tumor_coords, ref_shape, 1)
@@ -101,7 +101,7 @@ def simulate_clicks(args):
     ref_shape = label_im.shape
     ref_affine = label_im.affine
     label_im = label_im.get_fdata()
-    clicks = {'tumor':[], 'background': []}
+    clicks = {'lesion':[], 'background': []}
 
 
     if np.sum(label_im) == 0:
@@ -133,9 +133,9 @@ def simulate_clicks(args):
             if args.center_offset is not None:
                 center = perturb_click(args.center_offset, center, label_im)
 
-            clicks['tumor'].append([int(center[0]), int(center[1]), int(center[2])])
+            clicks['lesion'].append([int(center[0]), int(center[1]), int(center[2])])
             assert label_im[int(center[0]), int(center[1]), int(center[2])]
-        n_clicks = len(clicks['tumor'])
+        n_clicks = len(clicks['lesion'])
 
         # Sample boundary clicks if center clicks were not enough to fill the click budget (n=10)
         while n_clicks < 10:
@@ -160,7 +160,7 @@ def simulate_clicks(args):
                 if args.edge_offset is not None:
                     boundary_click = perturb_click(args.edge_offset, boundary_click, label_im)
 
-                clicks['tumor'].append([int(boundary_click[0]), int(boundary_click[1]), int(boundary_click[2])])
+                clicks['lesion'].append([int(boundary_click[0]), int(boundary_click[1]), int(boundary_click[2])])
                 assert label_im[int(boundary_click[0]), int(boundary_click[1]), int(boundary_click[2])]
                 n_clicks += 1
                 if n_clicks == 10:
