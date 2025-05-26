@@ -10,8 +10,8 @@ from cucim.core.operations import morphology
 import json
 
 
-    
-# For click visualization 
+
+# For click visualization
 def generate_gaussian_heatmap(coords, shape, sigma=2.0):
     from scipy.ndimage import gaussian_filter
     """
@@ -30,7 +30,7 @@ def generate_gaussian_heatmap(coords, shape, sigma=2.0):
         if 0 <= coord[0] < shape[0] and 0 <= coord[1] < shape[1] and 0 <= coord[2] < shape[2]:
             heatmap[tuple(coord)] = 1.0
 
-    heatmap = gaussian_filter(heatmap, sigma=sigma)    
+    heatmap = gaussian_filter(heatmap, sigma=sigma)
     return heatmap
 
 def save_click_heatmaps(clicks, ref_shape, ref_affine, debug_output, input_label):
@@ -106,7 +106,7 @@ def simulate_clicks(args):
 
     if np.sum(label_im) == 0:
         print("[WARNING] GT is empty, generating background clicks only!")
-    else: 
+    else:
         ##### Tumor Clicks #####
         connected_components = cc3d.connected_components(label_im, connectivity=26)
         unique_labels = np.unique(connected_components)[1:] # Skip background label 0
@@ -114,7 +114,7 @@ def simulate_clicks(args):
         sampled_labels = np.random.choice(unique_labels, size=size, replace=False)
 
         # Sample center clicks for 10 random components
-        for label in sampled_labels:    
+        for label in sampled_labels:
             labeled_mask = connected_components == label
             labeled_mask = cp.array(labeled_mask)
             try:
@@ -139,7 +139,7 @@ def simulate_clicks(args):
 
         # Sample boundary clicks if center clicks were not enough to fill the click budget (n=10)
         while n_clicks < 10:
-            for label in sampled_labels: 
+            for label in sampled_labels:
                 labeled_mask = connected_components == label
                 labeled_mask = cp.array(labeled_mask)
                 try:
@@ -152,7 +152,7 @@ def simulate_clicks(args):
                     edt = ndimage.morphology.distance_transform_edt(labeled_mask.get())
                     edt = cp.array(edt)
                     labeled_mask = cp.array(labeled_mask)
-                edt_inverted = (cp.max(edt) - edt) * (edt > 0) 
+                edt_inverted = (cp.max(edt) - edt) * (edt > 0)
                 boundary_elements = (edt_inverted == cp.max(edt_inverted)) * (labeled_mask > 0)
                 indices = cp.array(cp.nonzero(boundary_elements)).T.get()  # Shape: (num_true, ndim)
                 boundary_click = indices[np.random.choice(indices.shape[0])]
@@ -165,7 +165,7 @@ def simulate_clicks(args):
                 n_clicks += 1
                 if n_clicks == 10:
                     break
-    
+
     ##### Background Clicks #####
     in_liver = nib.load(args.input_liver).get_fdata()
 
@@ -176,11 +176,10 @@ def simulate_clicks(args):
         os.makedirs(args.debug_output, exist_ok = True)
         save_click_heatmaps(clicks, ref_shape, ref_affine, args.debug_output, args.input_label)
 
-    os.makedirs(args.json_output, exist_ok=True)
-
-    with open(os.path.join(args.json_output, args.input_label.replace('.nii.gz', '_clicks.json').split('/')[-1]), 'w') as f:
+    os.makedirs(os.path.dirname(args.json_output), exist_ok=True)
+    with open(args.json_output, 'w') as f:
         json.dump(clicks, f)
-    print('Done with writing', os.path.join(args.json_output, args.input_label.replace('.nii.gz', '_clicks.json').split('/')[-1]))
+    print('Done with writing', args.json_output)
     return clicks
 
 if __name__ == "__main__":
