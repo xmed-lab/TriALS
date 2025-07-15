@@ -246,7 +246,7 @@ def compute_segmentation_scores(prediction_mask, reference_mask,
             scores['dice'].append(dice)
             scores['jaccard'].append(jaccard)
             scores['voe'].append(1.-jaccard)
-            scores['rvd'].append(metric.ravd(r,p))
+            scores['rvd'].append(abs(metric.ravd(r,p)))
             evalsurf = Surface(p, r,
                                physical_voxel_spacing=voxel_spacing,
                                mask_offset=[0.,0.,0.],
