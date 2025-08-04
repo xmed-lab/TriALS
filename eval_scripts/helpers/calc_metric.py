@@ -168,18 +168,21 @@ def detect_lesions(prediction_mask, reference_mask, min_overlap=0.5):
         for p_id in p_id_intersected:
             d[p==p_id] = g_id
             
-    # Trim away lesions deemed undetected.
-    num_detected = len(p_id_list)
+    # Count only detected lesions with sufficient overlap
+    num_detected = 0
+    already_counted_g_ids = set()
     for i, p_id in enumerate(p_id_list):
         for j, g_id in enumerate(g_id_list):
             intersection = intersection_matrix[i, j]
-            if intersection==0:
+            if intersection == 0 or g_id in already_counted_g_ids:
                 continue
-            union = np.count_nonzero(np.logical_or(d==p_id, m==g_id))
-            overlap_fraction = float(intersection)/union
-            if overlap_fraction <= min_overlap:
-                d[d==g_id] = 0      # Assuming one-to-one p_id <--> g_id
-                num_detected -= g_merge_count[g_id]
+            union = np.count_nonzero(np.logical_or(d == p_id, m == g_id))
+            overlap_fraction = float(intersection) / union
+            if overlap_fraction > min_overlap:
+                num_detected += 1
+                already_counted_g_ids.add(g_id)
+            else:
+                d[d == g_id] = 0  # Clean up false detection
                 
     return detected_mask, mod_reference_mask, num_detected
 
