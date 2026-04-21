@@ -550,6 +550,15 @@ def compute_tumor_burden(prediction_mask, reference_mask):
     tumor_burden_diff = tumor_burden_r - tumor_burden_p
     return tumor_burden_diff
 
+def cast_agg_to_float(agg):
+    new_agg = {}
+    for metric in ['dice', 'assd', 'msd']:
+        new_agg[metric] = {}
+        for metric_type in ['AUC', 'Final']:
+            el = agg[metric][metric_type]
+            new_agg[metric][metric_type] = float(el)
+    return new_agg
+
 
 def compute_segmentation_scores(prediction_mask, reference_mask,
                                 voxel_spacing):
@@ -694,6 +703,8 @@ if __name__ == '__main__':
             print(f'\n  Case: {os.path.basename(predicted_case)} ({len(grouped_jsons)} files)')
             assert len(grouped_jsons) == 11
             agg = aggregate_group_metrics(grouped_jsons)
+            agg = cast_agg_to_float(agg)
+
             output_json = os.path.join(output_path, f'{os.path.basename(predicted_case)}.json')
             with open(output_json, 'w') as f:
                 json.dump(agg, f, indent=2)
