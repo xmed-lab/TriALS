@@ -1,4 +1,5 @@
-# [TriALS-MICCAI-2024](https://www.synapse.org/#!Synapse:syn53285416/wiki/)
+# TriALS: Triphasic-Aided Liver Lesion Segmentation Benchmark
+[![Dataset](https://img.shields.io/badge/🤗%20Dataset-TriALS-yellow)](https://huggingface.co/datasets/marwankefah/TriALS)
 
 
 Welcome to the official repository for the TriALS challenge
