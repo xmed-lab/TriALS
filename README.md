@@ -1,4 +1,5 @@
 # TriALS: Triphasic-Aided Liver Lesion Segmentation Benchmark
+[![arXiv](https://img.shields.io/badge/arXiv-2605.16572-b31b1b.svg)](https://arxiv.org/abs/2605.16572)
 [![Dataset](https://img.shields.io/badge/🤗%20Dataset-TriALS-yellow)](https://huggingface.co/datasets/marwankefah/TriALS)
 
 
@@ -187,8 +188,22 @@ nnUNetv2_predict -i INPUT_FOLDER -o OUTPUT_FOLDER -d DATASET_ID -c CONFIGURATION
 
 
 ## Citation
-If you utilize the baselines in this repository for your research, please consider citing the relevant papers for [Swin-UNETR](https://arxiv.org/abs/2201.01266), [SegResNet](https://arxiv.org/pdf/1810.11654.pdf), [LightM-UNet](https://arxiv.org/abs/2403.05246v1), [U-Mamba](https://arxiv.org/abs/2401.04722), [MedNext](https://github.com/MIC-DKFZ/MedNeXt), [SAMed](https://arxiv.org/abs/2304.13785), and [nnU-Net](https://www.nature.com/articles/s41592-020-01008-z).
 
+If you utilize the TriALS dataset, please cite the relevant paper:
+
+```
+@misc{elbatel2026trialstriphasicaidedliverlesion,
+      title={TriALS: Triphasic-Aided Liver Lesion Segmentation Benchmark in Non-Contrast CT}, 
+      author={Marawan Elbatel and Mohamed Ghonim and Jiaji Mao and Zhuosheng Lin and Katharina Eckstein and Andrés Martínez Mora and Jonathan Deissler and Maximilian Rokuss and Constantin Ulrich and Zdravko Marinov and Wenhui Deng and Baoxun Li and Huijun Hu and Jun Shen and Mohanad Ghonim and Khadiga Omar Nassar and Mariam Elbakry and Menna Dyab and Amr Muhammad Abdo Salem and Nouran Elghitany and Noha Elghitany and Yi Qin and Xuanqi Huang and Haonan Wang and Shao-Woo Yen and Ahmed Elghamry Saba and Salma Ahmad and Xinyan Fang and Jiahao Zhang and Xiaodi Wang and Xinghua Ma and Gongning Luo and Jessica C. Delmoral and João Manuel R. S. Tavares and Ankan Deria and Adinath Dukre and Yutong Xie and Imran Razzak and Dongwook Kim and Matthew Choi and Hanxiao Zhang and Minghui Zhang and Xin You and Abdul Qayyum and Steven A. Niederer and Moona Mazher and Rachika E. Hamadache and Ricardo Montoya-del-Angel and Robert Martí and Xavier Lladó and Toufiq Musah and Livingstone Eli Ayivor and Enrique Almar-Munoz and Agnes Mayr and Kaouther Mouheb and Esther E. Bron and Stefan Klein and Ahmed Abouelhoda and Amira Adel and Susan Adil Ali and Rainer Stiefelhagen and Klaus H. Maier-Hein and Fabian Isensee and Aya Yassin and Xiaomeng Li},
+      year={2026},
+      eprint={2605.16572},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.16572}, 
+}
+```
+
+If you utilize the baselines in this repository for your research, please consider citing the relevant papers for [Swin-UNETR](https://arxiv.org/abs/2201.01266), [SegResNet](https://arxiv.org/pdf/1810.11654.pdf), [LightM-UNet](https://arxiv.org/abs/2403.05246v1), [U-Mamba](https://arxiv.org/abs/2401.04722), [MedNext](https://github.com/MIC-DKFZ/MedNeXt), [SAMed](https://arxiv.org/abs/2304.13785), and [nnU-Net](https://www.nature.com/articles/s41592-020-01008-z).
 
 
 ## Acknowledgements
